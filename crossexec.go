@@ -1,9 +1,7 @@
+//go:build plan9 || unix || windows
+
 package crossexec
 
-import (
-	"os"
-)
-
-func CrossExecProcess(name string, argv []string, attr *os.ProcAttr) error {
-	return crossExecProcess(name, argv, attr)
+func CrossExec(argv0 string, argv []string, envv []string) error {
+	return crossExec(argv0, argv, envv)
 }

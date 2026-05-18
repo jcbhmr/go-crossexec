@@ -5,8 +5,11 @@
 <table align=center><td>
 
 ```go
-cmd := exec.Command("go", "version")
-log.Fatal((*crossexec.CmdExt)(cmd).CrossExec())
+path, err := exec.LookPath("go")
+if err != nil {
+    panic(err)
+}
+log.Fatal(crossexec.CrossExec(path, os.Args, os.Environ()))
 ```
 
 </table>
@@ -16,14 +19,14 @@ log.Fatal((*crossexec.CmdExt)(cmd).CrossExec())
 ![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=Go&logoColor=FFFFFF)
 
 ```sh
-go get github.com/jcbhmr/go-crossexec
+go get go.jcbhmr.com/crossexec
 ```
 
 ## Usage
 
 ![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=Go&logoColor=FFFFFF)
 
-[📚 See the docs](https://pkg.go.dev/github.com/jcbhmr/go-crossexec)
+[📚 See the docs](https://pkg.go.dev/go.jcbhmr.com/crossexec)
 
 ## Development
 

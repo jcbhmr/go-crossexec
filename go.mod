@@ -1,8 +1,7 @@
-module github.com/jcbhmr/go-crossexec
+module go.jcbhmr.com/crossexec
 
-go 1.25.4
+go 1.25.0
 
-require (
-	github.com/jcbhmr/go-exec v1.0.0
-	golang.org/x/sys v0.40.0
-)
+toolchain go1.26.3
+
+require golang.org/x/sys v0.44.0

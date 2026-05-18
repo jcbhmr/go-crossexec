@@ -1,18 +1,15 @@
 package crossexec
 
 import (
-	"fmt"
 	"os"
 	"runtime"
 	"sync"
 
-	"github.com/jcbhmr/go-crossexec/internal/consoleapi"
+	"go.jcbhmr.com/crossexec/internal/consoleapi"
 	"golang.org/x/sys/windows"
 )
 
 const windowsTRUE = 1
-
-// const windowsFALSE = 0
 
 var getIgnoreCtrlHandler = sync.OnceValue(func() consoleapi.PHANDLER_ROUTINE {
 	return consoleapi.PHANDLER_ROUTINE(windows.NewCallback(func(_ uint32) uintptr {
@@ -20,29 +17,33 @@ var getIgnoreCtrlHandler = sync.OnceValue(func() consoleapi.PHANDLER_ROUTINE {
 	}))
 })
 
-var forked sync.Mutex
+var crossExecMu sync.Mutex
 
-func crossExecProcess(name string, argv []string, attr *os.ProcAttr) (err error) {
+func crossExec(argv0 string, argv []string, envv []string) (err error) {
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
 
-	forked.Lock()
-	defer forked.Unlock()
+	crossExecMu.Lock()
+	defer crossExecMu.Unlock()
 
 	err = consoleapi.SetConsoleCtrlHandler(getIgnoreCtrlHandler(), true)
 	if err != nil {
 		return err
 	}
 
-	process, err := os.StartProcess(name, argv, attr)
+	process, err := os.StartProcess(argv0, argv, &os.ProcAttr{
+		Env:   envv,
+		Files: []*os.File{os.Stdin, os.Stdout, os.Stderr},
+	})
 	if err != nil {
 		return err
 	}
+
 	state, err := process.Wait()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "crossexec: %v\n", err)
-		os.Exit(1)
+		panic(err)
 	}
+
 	os.Exit(state.ExitCode())
 	panic("noreturn")
 }
