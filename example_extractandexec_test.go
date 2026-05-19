@@ -13,9 +13,7 @@ import (
 // Use "//go:embed" or something.
 var app_sh []byte
 
-// [./examples/extract-and-exec]
-//
-// [./examples/extract-and-exec]: ./examples/extract-and-exec
+// https://pkg.go.dev/go.jcbhmr/crossexec/examples/extract-and-exec
 func ExampleExec_extractAndExec() {
 	userCacheDir, err := os.UserCacheDir()
 	if err != nil {
