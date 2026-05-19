@@ -3,15 +3,42 @@
 package crossexec_test
 
 import (
-	_ "go.jcbhmr.com/crossexec"
+	"log"
+	"os"
+	"os/exec"
+	"path/filepath"
+
+	"go.jcbhmr.com/crossexec"
 )
 
-// [./examples/go-version]
-//
-// [./examples/go-version]: ./examples/go-version
-func ExampleExec_goVersion() {}
+func MustLookPath(file string) string {
+	p, err := exec.LookPath(file)
+	if err != nil {
+		panic(err)
+	}
+	return p
+}
 
-// [./examples/extract-and-exec]
-//
-// [./examples/extract-and-exec]: ./examples/extract-and-exec
-func ExampleExec_extractAndExec() {}
+func ExampleExec_goVersion() {
+
+	log.Fatal(crossexec.Exec(MustLookPath("go"), []string{"go", "version"}, os.Environ()))
+}
+
+// Use "//go:embed" or something.
+var app_sh []byte
+
+func ExampleExec_extractAndExec() {
+	userCacheDir, err := os.UserCacheDir()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	appPath := filepath.Join(userCacheDir, "extract-and-exec-app.sh")
+
+	err = os.WriteFile(appPath, app_sh, 0o755)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Fatal(crossexec.Exec(appPath, os.Args, os.Environ()))
+}
