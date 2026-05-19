@@ -1,32 +1,21 @@
-//go:build plan9 || unix || windows
+//go:build linux
 
 package crossexec_test
 
 import (
 	"log"
 	"os"
-	"os/exec"
 	"path/filepath"
 
 	"go.jcbhmr.com/crossexec"
 )
 
-func MustLookPath(file string) string {
-	p, err := exec.LookPath(file)
-	if err != nil {
-		panic(err)
-	}
-	return p
-}
-
-func ExampleExec_goVersion() {
-
-	log.Fatal(crossexec.Exec(MustLookPath("go"), []string{"go", "version"}, os.Environ()))
-}
-
 // Use "//go:embed" or something.
 var app_sh []byte
 
+// [./examples/extract-and-exec]
+//
+// [./examples/extract-and-exec]: ./examples/extract-and-exec
 func ExampleExec_extractAndExec() {
 	userCacheDir, err := os.UserCacheDir()
 	if err != nil {
