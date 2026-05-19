@@ -9,7 +9,7 @@ p, err := exec.LookPath("go")
 if err != nil {
     panic(err)
 }
-log.Fatal(crossexec.CrossExec(p, os.Args, os.Environ()))
+log.Fatal(crossexec.Exec(p, os.Args, os.Environ()))
 ```
 
 </table>
@@ -26,9 +26,9 @@ go get go.jcbhmr.com/crossexec
 
 ![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=Go&logoColor=FFFFFF)
 
-This module exports only a single function: **[`crossexec.Exec`](https://pkg.go.dev/go.jcbhmr.com/crossexec#CrossExec)**. It takes in the same arguments and has the same behaviour as [`syscall.Exec`](https://pkg.go.dev/syscall#Exec) (available on `unix || plan9`; returns `EWINDOWS` on `windows`) except `crossexec.Exec` **works on Windows too** using a normal subprocess instead of replacing the current process.
+This module exports only a single function: **[`crossexec.Exec`](https://pkg.go.dev/go.jcbhmr.com/crossexec#Exec)**. It takes in the same arguments and has the same behaviour as [`syscall.Exec`](https://pkg.go.dev/syscall#Exec) (available on `unix || plan9`; returns `EWINDOWS` on `windows`) except `crossexec.Exec` **works on Windows too** using a normal subprocess instead of replacing the current process.
 
-[📚 See the docs](https://pkg.go.dev/go.jcbhmr.com/crossexec#CrossExec)
+[📚 See the docs](https://pkg.go.dev/go.jcbhmr.com/crossexec#Exec)
 
 ## Development
 
