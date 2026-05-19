@@ -20,6 +20,5 @@ func MustLookPath(file string) string {
 
 // https://pkg.go.dev/go.jcbhmr/crossexec/examples/go-version
 func ExampleExec_goVersion() {
-
 	log.Fatal(crossexec.Exec(MustLookPath("go"), []string{"go", "version"}, os.Environ()))
 }
