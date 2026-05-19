@@ -6,6 +6,6 @@ import (
 	"golang.org/x/sys/unix"
 )
 
-func crossExec(argv0 string, argv []string, envv []string) error {
+func exec(argv0 string, argv []string, envv []string) error {
 	return unix.Exec(argv0, argv, envv)
 }

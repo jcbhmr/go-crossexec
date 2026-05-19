@@ -2,6 +2,7 @@
 
 package crossexec
 
-func CrossExec(argv0 string, argv []string, envv []string) error {
-	return crossExec(argv0, argv, envv)
+// Exec behaves like [syscall.Exec].
+func Exec(argv0 string, argv []string, envv []string) error {
+	return exec(argv0, argv, envv)
 }

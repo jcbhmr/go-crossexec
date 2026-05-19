@@ -5,6 +5,6 @@ import (
 	"syscall"
 )
 
-func crossExecProcess(argv0 string, argv []string, envv []string) error {
+func exec(argv0 string, argv []string, envv []string) error {
 	return syscall.Exec(argv0, argv, envv)
 }

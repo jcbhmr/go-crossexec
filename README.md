@@ -26,7 +26,9 @@ go get go.jcbhmr.com/crossexec
 
 ![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=Go&logoColor=FFFFFF)
 
-[📚 See the docs](https://pkg.go.dev/go.jcbhmr.com/crossexec)
+This module exports only a single function: [`crossexec.Exec`](https://pkg.go.dev/go.jcbhmr.com/crossexec#CrossExec). It takes in the same arguments and has the same behaviour as [`syscall.Exec`](https://pkg.go.dev/syscall#Exec) (available on `unix || plan9`; returns `EWINDOWS` on `windows`) except `crossexec.Exec` **works on Windows too**.
+
+[📚 See the docs](https://pkg.go.dev/go.jcbhmr.com/crossexec#CrossExec)
 
 ## Development
 

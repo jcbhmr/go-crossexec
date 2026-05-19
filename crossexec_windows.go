@@ -17,14 +17,14 @@ var getIgnoreCtrlHandler = sync.OnceValue(func() consoleapi.PHANDLER_ROUTINE {
 	}))
 })
 
-var crossExecMu sync.Mutex
+var execMu sync.Mutex
 
-func crossExec(argv0 string, argv []string, envv []string) (err error) {
+func exec(argv0 string, argv []string, envv []string) (err error) {
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
 
-	crossExecMu.Lock()
-	defer crossExecMu.Unlock()
+	execMu.Lock()
+	defer execMu.Unlock()
 
 	err = consoleapi.SetConsoleCtrlHandler(getIgnoreCtrlHandler(), true)
 	if err != nil {
